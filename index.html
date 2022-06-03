@@ -1,0 +1,1230 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="comrade.css">
+<title> heuristic software </title>
+</head>
+<body>
+<div id="hol">
+<header>
+<h1>Preference Heuristic Model</h1>
+<h2> For Classification of Data</h2>
+</header>
+<center>
+<div id="y">
+<img src ="explain.png"/>
+</div>
+<h3>Note</h3>
+</center>
+<p> The uploaded file containing the Dataset should be in form of an <span style="color: red; font-weight:bold;">"Excel file"</span> extracted the header leaving only
+the attribute as described with an image below</p>
+<center>
+ <img id="m" src="table.png"/>&nbsp;&nbsp;
+  <img id="m" src="correct.png"/>
+  </center>
+<form>
+<center>
+<label>Number of group</label><input type="text" id="f"/><br/><br/>
+<label>Dataset upload</label><input type="file" id="input" accept=".xls,.xlsx,.ods"/>
+</center>
+</form>
+</div>
+
+<script>
+
+function doMagic(d){
+let ad = d;
+let he = [];
+for(let i of ad){
+he.push(i.toString())}
+return he;
+}
+
+//function that compute intersection of two array [1,2,3] and [2,3,4] gives [2,3]
+function intersect(a,b){
+let o = a;
+let g = b;
+let empty = [];
+for(let i of o){
+for(let j of g){
+if(i.toString() == j.toString() && !empty.includes(i)){
+empty.push(i);
+}
+}
+}
+return empty
+}
+
+//use of computing union of two arrays eg [1,2,3] and [1,2,3] gives [1,2,3]
+function union(a,b){
+let something = [];
+for(let i of a){
+if(!doMagic(something).includes(doMagic([i])[0])){
+something.push(i)}
+}
+for (let j of b){
+if(!doMagic(something).includes(doMagic([j])[0])){
+something.push(j);
+}
+}
+return something;
+}
+
+// function that change  a single array to an array of array  example [1,2,3] change to  [[1,2,3]]
+function change(a){
+let d  = a;
+let something = [];
+for(let i of d){
+something.push([i]);
+}
+return something;
+}
+
+
+
+
+//function for counting each element in an array
+
+function count(l){
+return l.length;
+}
+
+//function that compute individual similarity index 
+function ri(a,b){
+let t = count(intersect(a,b));
+let e = count(union(a,b));
+
+return t/e;
+}
+
+function count(l){
+return l.length;
+}
+
+//function that compute individual similarity index 
+function ri(a,b){
+let t = count(intersect(a,b));
+let e = count(union(a,b));
+
+return t/e;
+}
+
+function doMagic(d){
+let ad = d;
+let he = [];
+for(let i of ad){
+he.push(i.toString())}
+return he;
+}
+
+
+function place(array,item){
+let index = doMagic(array).indexOf(item.toString())
+if(index !== -1){
+array[index] = -1;
+return array;
+}
+}
+
+function add(array){
+let count = 0;
+for(let i of array){
+count = count+i;
+}
+return count;
+}
+
+
+
+function projectRecommender(set){
+let f =  set; 
+let cont =[];
+let cont1 =[];
+let cont2= [];
+let cont3 =[];
+let cont4= [];
+let ep= [];
+let ep1= [];
+let empty7=[];
+
+for(let a of f){
+cont.push(a);
+}
+//document.write(cont+" cont<br/>")
+for(let i of f ){
+for(let j of f){
+ ep.push(ri(i,j));
+ }
+ //document.write(ep+" ep<br/>");
+ ep.splice(doMagic(cont).indexOf(i.toString()),1)
+ place(cont,i);
+ //document.write(ep+" epR<br/>");
+ //document.write(cont+" contR<br/>")
+ for(let l of ep){
+ cont2.push(l);
+ }
+ //document.write(cont2+"<br/>");
+ ep = [];
+ }
+ 
+ 
+ //tracking 
+for(let b of f){
+cont3.push(b);
+}
+//document.write(cont3+"<br/>");
+for(let i of f ){
+for(let j of f){
+ ep1.push([ri(i,j),i,j]);
+ }
+ //document.write(ep1+" ep<br/>");
+ ep1.splice(doMagic(cont3).indexOf(i.toString()),1)
+ place(cont3,i);
+ //document.write(ep1+" epR<br/>");
+ //document.write(cont3+"contR<br/>")
+ for(let l of ep1){
+ cont4.push(l);
+ }
+ //document.write(cont4+"<br/>");
+ ep1 = [];
+ }
+let minimum = Math.min(...cont2);
+for(let i of cont4){
+if(i[0] == minimum){
+empty7.push(i);
+}
+}
+for(let i=0; i<empty7.length; i++){
+//document.write(i+1+'='+empty7[i]+"<br/>");
+}
+let h = empty7[0];
+h.shift();
+let arrayResult = change(h); 
+return arrayResult;
+}
+
+
+function doMagic(d){
+let ad = d;
+let he = [];
+for(let i of ad){
+he.push(i.toString())}
+return he;
+}
+
+
+
+function intersect(a,b){
+let o = a;
+let g = b;
+let empty = [];
+for(let i of o){
+for(let j of g){
+if(i.toString() == j.toString() && !empty.includes(i)){
+empty.push(i);
+}
+}
+}
+return empty
+}
+
+
+function union(a,b){
+let something = [];
+for(let i of a){
+if(!doMagic(something).includes(doMagic([i])[0])){
+something.push(i)}
+}
+for (let j of b){
+if(!doMagic(something).includes(doMagic([j])[0])){
+something.push(j);
+}
+}
+return something;
+}
+// function for counting
+
+function count(l){
+return l.length;
+}
+
+
+
+function ri(a,b){
+let t = count(intersect(a,b));
+let e = count(union(a,b));
+
+return t/e;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function change(a){
+let d  = a;
+let something = [];
+for(let i of d){
+something.push([i]);
+}
+return something;
+}
+
+
+function spreadArray(p){
+let d  = p;
+let nothing = [];
+for(let i of d){
+for(let j of i){
+nothing.push(j);
+}
+}
+return nothing;
+}
+
+
+function doArray(o){
+let g = o;
+follArray = [];
+for(let i of g){
+follArray.push(i.split(','));
+}
+return follArray;
+}
+
+
+
+function remove(big,small){
+let empty=doMagic(big);
+let empt = doMagic(small);
+let empt1 = change(empt);
+for(let p=0; p<empt.length; p++){
+for(let i of empt1[p]){
+empty.splice(empty.indexOf(i),1)
+}
+}
+let reu = doArray(empty);
+return reu;
+}
+
+
+function addingArray(p){
+let f = p;
+let count = 0;
+for(let i of f ){
+count = count + i;}
+return count;
+}
+
+
+// Group Creation
+
+function calc(a,b){
+let i = addingArray(a);
+let g = adddingArray(b);
+let u = i + g;
+return u;
+}
+
+function bringTogether(a,b){
+let i = a;
+let g = b;
+i.push(g);
+return i;
+}
+
+
+function groupCompute(set,remain,group,n){
+let f = set;
+let fremain = remain;
+let gall = group;
+let fspread = spreadArray(gall);
+let number = n;
+empty = [];
+empty1=[];
+empty2 =[];
+empty3 =[];
+empty4 =[];
+empty5 =[];
+empty6 =[];
+empty7 =[];
+empty8 =[];
+empty9 =[];
+empty11 =[];
+empty12 =[];
+empty13 =[];
+empty14 =[];
+empty15 =[];
+empty56=[];
+minimumValue=[];
+x = [];
+empty30=[];
+
+for(let i of fremain){
+for(let j of fspread){
+empty.push(ri(i,j));
+empty1.push(i,j);
+empty2.push(remove(f,empty1));
+empty1 = [];
+//document.write(empty + "this is empty"+"<br/>");
+//document.write(empty2 + "<br/>")
+empty11.push(i)
+empty12.push(j);
+//document.write(empty11 + " this is empty 2,3,5 <br/>")
+//document.write(empty12 + "this is suppose 1,2,3 <br/>")
+
+for (let o of empty11){
+for(let k of empty2[0]){
+empty3.push(ri(o,k));}}
+
+//document.write(empty3+"this is empty3 addition" + "<br/>")
+
+for (let a of empty12){
+for(let k of empty2[0]){
+empty4.push(ri(a,k));
+empty56.push([a,k])}}
+
+//document.write(empty4+"this is empty4 addition"+ "<br/>")
+//document.write(empty56+"this is empty4 addition" + "<br/>")
+
+empty5.push(addingArray(empty3));
+empty13.push(addingArray(empty4));
+empty14.push(empty5[0] + empty13[0]);
+empty15.push(empty14[0]/(2*(f.length-2)))
+//document.write(empty5 +'this empty 5'+ "<br/>");
+//document.write(empty13 +'this empty 13'+"<br/>");
+//document.write(empty14 +'this empty 14'+ "<br/>");
+//document.write(empty15 +'this empty 15'+ "<br/>");
+
+empty3 = [];
+empty4 = [];
+empty2 = [];
+empty11 = [];
+empty12 = [];
+empty5=[];
+empty13 = [];
+empty14 = [];
+
+empty6.push(empty[0] - empty15[0]);
+empty15 = [];
+empty = [];
+}
+//document.write(empty6 +"this result empty6"+ "<br/>");
+empty7.push(addingArray(empty6));
+empty8.push(i);
+empty6 = [];
+}
+
+//document.write(empty7+"this result empty7" + "<br/>");
+
+//document.write(empty8 + "<br/>");
+
+
+minimumValue.push(Math.min(...empty7));
+//document.write(minimumValue[0] + "<br/>");
+x.push(empty7.indexOf(minimumValue[0]));
+//document.write(x[0]+"<br/>");
+//document.write(empty8[x[0]]+"<br/>");
+gall.push([empty8[x[0]]]);
+//document.write(gall+"<br/>");
+empty30.push(remove(f,spreadArray(gall)));
+//document.write("i am solve"+ empty30+'<br/>');
+if(empty30[0].length !==0 && gall.length !== number){
+groupCompute(set,empty30[0],gall,n);
+empty30 =[];
+}
+else{
+return gall;
+}
+return gall;
+}
+/*let set = [[1,2,3],[2,3,5],[4,6,7],[7,8,9],[9,0,1],[2,3,4]];
+let giss = projectRecommender(set);
+//let group = [[[1,2,3]],[[2,3,5]]];
+let row = remove(set,giss);
+document.write(groupCompute(set,row,giss,5) + "<br/>");
+let uty = groupCompute(set,row,giss,5);
+for(let i of uty){
+document.write("this is indicator group"+i+"<br/>");
+};*/
+
+// this is the end of part two formula  
+
+
+function doMagic(d){
+let ad = d;
+let he = [];
+for(let i of ad){
+he.push(i.toString())}
+return he;
+}
+
+function intersect(a,b){
+let o = a;
+let g = b;
+let empty = [];
+for(let i of o){
+for(let j of g){
+if(i.toString() == j.toString() && !empty.includes(i)){
+empty.push(i);
+}
+}
+}
+return empty
+}
+
+
+function union(a,b){
+let something = [];
+for(let i of a){
+if(!doMagic(something).includes(doMagic([i])[0])){
+something.push(i)}
+}
+for (let j of b){
+if(!doMagic(something).includes(doMagic([j])[0])){
+something.push(j);
+}
+}
+return something;
+}
+// function for counting
+
+function count(l){
+return l.length;
+}
+
+
+
+function ri(a,b){
+let t = count(intersect(a,b));
+let e = count(union(a,b));
+
+return t/e;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function change(a){
+let d  = a;
+let something = [];
+for(let i of d){
+something.push([i]);
+}
+return something;
+}
+
+
+
+/*function spreadArray(w){
+let a = w;
+nothing= [];
+for(let i=0; i<a.length; i++){
+document.write(i  + "<br/>");
+for(let j of a[i]){
+nothing.push(j)+ "<br/>";}
+}
+return nothing;
+}
+let w = [[1,2,3],[5,4,3],[5,6,7]];
+document.write(spreadArray(w));*/
+
+function spreadArray(p){
+let d  = p;
+let nothing = [];
+for(let i of d){
+for(let j of i){
+nothing.push(j);
+}
+}
+return nothing;
+}
+
+/*let g = [[3],[5]];
+let b = [1,2,3,4,5];
+let something = [];
+let empty = [];
+for (let i of g[0]){
+for(let j of b){
+if(i !==j){
+something.push(j);
+}
+}
+}
+document.write(something + "<br/>");
+let c = something;
+document.write(c + "<br/>");
+
+/*for (let i of g[1]){
+for(let j of c){
+if(i !==j){
+something.push(j);
+}
+}
+}
+document.write(something + "<br/>");*/
+
+/*function remove(big,small){
+let a = big;
+let b = spreadArray(small);
+for(let i of b){
+a.splice(index,  a.indexOf(i))
+}
+return a
+}
+
+function addingArray(p){
+let f = p;
+let count = 0;
+for(let i of f ){
+count = count + i;}
+return count;
+}
+*/
+
+
+
+
+function doArray(o){
+let g = o;
+follArray = [];
+for(let i of g){
+follArray.push(i.split(','));
+}
+return follArray;
+}
+
+
+function remove(big,small){
+let empty=doMagic(big);
+let empt = doMagic(small);
+let empt1 = change(empt);
+for(let p=0; p<empt.length; p++){
+for(let i of empt1[p]){
+empty.splice(empty.indexOf(i),1)
+}
+}
+let reu = doArray(empty);
+return reu;
+}
+//let big=[[1,2,3],[4,5,6],[7,8,9]];
+//et small = [[1,2,3],[4,5,6]];
+//document.write(remove(big,small));
+
+
+function addingArray(p){
+let f = p;
+let count = 0;
+for(let i of f ){
+count = count + i;}
+return count;
+}
+
+
+
+ /*rfunction add(array){
+let a = array[0];
+let b  =array[1];
+return a+b;
+}   */
+
+// computing the prference index on parts
+
+function createPart(dataset,remainder,groupcom){
+let f = dataset;
+let fremain = remainder;
+let gall = groupcom;
+empty = [];
+empty1=[]
+empty2 = [];
+empty3 = [];
+empty4 = [];
+empty5 = [];
+empty6 = [];
+empty7 = [];
+empty8 = [];
+empty9 = [];
+empty10 = [];
+emptyc=[];
+fspread = spreadArray(gall);
+for(let p=0; p < gall.length; p++){
+for(let i of fremain){
+for(let j of gall[p]){
+empty.push(ri(i,j));
+}
+//document.write(empty +'this is empty'+ "<br/>");
+empty1.push(addingArray(empty)/gall[p].length);
+//document.write(empty1 +'this is empty1'+ "<br/>");
+empty = [];
+empty2.push(remove(f,gall[p]))
+//document.write(empty2 + "<br/>");
+empty10.push(i);
+//document.write(empty10+'this empty10 alway one val'+'<br/>')
+for (let c of empty10){
+for(let k of empty2[0]){
+if(doMagic([c])[0]!== doMagic([k])[0]){
+empty3.push(ri(c,k));
+}
+}
+}
+empty10=[];
+//document.write(empty3 +'this is empty3'+ "<br/>");
+empty4.push(addingArray(empty3)/(f.length - gall[p].length -1));
+//document.write(empty4+'this is empty4' + "<br/>");
+empty5.push(empty1[0]-empty4[0]);
+empty6.push([i,p]);
+empty3 = [];
+empty4 = [];
+empty1 = [];
+empty2 = [];
+}
+}
+//document.write(empty5+'this is empty5' + "<br/>");
+//document.write(empty6+'this is empty6' + "<br/>");
+let highest = Math.max(...empty5);
+//document.write(highest +"<br/>");
+let y = empty5.indexOf(highest);
+//document.write(y +"<br/>");
+let re = empty6[y]
+//document.write(re +"<br/>");
+//document.write(re[0] +"<br/>");
+//document.write(re[1] +"<br/>");
+//document.write(gall[re[1]] +"<br/>");
+gall[re[1]].push(re[0]);
+let emptycc = gall;
+//document.write(gall+'this is the end of each part input result below' +"<br/>");
+//document.write(gall[0] +"<br/>");
+//document.write(gall[1] +"<br/>");
+//document.write(gall[2] +"<br/>");
+let ty = [re[0]]
+let remainT = remove(fremain,ty);
+if(remainT.length !== 0){
+createPart(f,remainT,emptycc);
+}
+else{
+return gall;}
+return gall;
+}
+
+
+
+
+// this is the end of formula two 
+
+
+function pi(setno,Indicatorno){
+let foreal =setno;
+let valueA = projectRecommender(foreal);
+let noIndicator = Indicatorno;
+//document.write(valueA +"<br/>");
+let spredo = spreadArray(valueA);
+//document.write(spredo + "<br/>");
+let subs = remove(foreal,spredo);
+//document.write(subs + "<br/>");
+if(noIndicator==1){
+document.write("error indicator group must be greater than one the initial group are");
+
+return valueA;
+}
+if(noIndicator ==2){
+let p = projectRecommender(foreal);
+if(p.length !== foreal.length){
+let r = createPart(foreal,subs,valueA);
+return r;
+}
+else{
+return valueA;
+}
+}
+else{
+let valueB = groupCompute(foreal,subs,valueA,noIndicator);
+if(valueB.length !== foreal.length){
+let spredo2 = spreadArray(valueB);
+let subs2 = remove(foreal,spredo2);
+let rolin1 = createPart(foreal,subs2,valueB);
+ return rolin1;
+}
+else{
+return valueB
+}
+}
+}
+
+
+//[['round neck','round bet','long sleeves'],['long sleeves','round bet','round both'],['round both','long sleeves','round bet'],['round bet','long neck','short neck'],['mouth style','long neck','long face']];
+/*let relo =[[2,1,3,3,3,1,1,1,2,1,1,1,1,1,1,1,1],
+[2,1,1,1,1,1,1,1,2,3,2,1,1,1,1,1,1],
+[2,1,4,4,4,1,1,2,4,1,1,1,1,1,1,1,2],
+[2,1,2,2,4,3,2,1,1,3,2,1,1,1,1,1,1],
+[2,1,1,1,1,3,2,1,2,1,1,1,1,1,1,1,1],
+[2,1,2,2,2,3,3,2,3,3,2,1,1,1,1,1,1],
+[2,1,4,3,2,3,3,1,1,2,3,1,1,1,1,1,2],
+[2,1,1,1,1,3,3,2,4,1,3,1,1,1,1,1,1],
+[2,1,4,2,4,3,3,1,2,3,3,1,1,1,1,1,1],
+[2,2,4,2,4,3,3,1,2,1,3,1,1,1,1,1,1],
+[2,3,1,1,1,3,3,2,5,1,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,3,1,2,2,3,1,1,1,1,1,1],
+[2,5,2,3,3,3,2,1,1,3,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,3,1,2,3,3,1,1,1,1,1,2],
+[2,2,2,3,4,3,3,1,1,3,3,1,1,1,1,1,1],
+[2,4,3,2,2,3,3,1,2,1,3,1,1,1,1,1,1],
+[2,4,3,4,2,3,3,1,1,2,3,1,1,1,1,1,1],
+[2,3,4,2,2,3,3,1,1,2,3,1,1,1,1,1,1],
+[2,5,2,4,2,3,3,1,2,1,3,1,1,1,1,1,1],
+[2,3,4,2,4,3,2,1,1,3,3,1,1,1,1,1,1],
+[2,5,3,2,3,3,3,1,1,1,3,1,1,1,1,1,1],
+[2,4,1,1,1,3,2,1,2,1,3,1,1,1,1,1,1],
+[2,4,3,3,3,3,2,1,2,2,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,2,2,4,2,3,1,1,1,1,1,1],
+[2,5,2,4,3,3,3,1,1,3,3,1,1,1,1,1,1],
+[2,4,4,4,3,3,2,1,2,3,3,1,1,1,1,1,1],
+[2,4,2,4,4,3,2,2,4,2,3,1,1,1,1,1,1],
+[2,4,2,4,4,3,3,2,3,3,3,1,1,1,1,1,1],
+[2,3,2,3,2,3,3,1,2,2,3,1,1,1,1,1,1],
+[2,3,2,2,3,3,2,1,1,3,3,1,1,1,1,1,1],
+[2,5,3,2,3,2,5,1,2,3,3,1,1,1,1,1,1],
+[2,3,1,1,1,2,5,1,5,2,3,1,1,1,1,1,1],
+[2,2,4,2,3,3,5,1,5,3,3,1,1,1,1,1,2],
+[2,3,2,4,3,2,5,1,3,1,1,1,1,1,1,1,1],
+[2,2,1,1,1,2,5,1,2,3,1,1,1,1,1,1,1],
+[2,5,2,2,2,2,3,1,3,3,2,1,1,1,1,1,1],
+[2,4,4,4,3,3,4,1,1,1,3,1,1,1,1,1,2],
+[2,5,1,1,1,2,4,1,4,2,3,1,1,1,1,1,1],
+[2,3,4,3,2,2,5,1,3,3,3,1,1,1,1,1,1],
+[2,2,4,3,2,2,5,2,4,3,3,1,1,1,1,1,1],
+[2,4,1,1,1,2,5,2,3,2,3,1,1,1,1,1,1],
+[2,2,1,1,1,3,5,1,2,2,3,1,1,1,1,1,1],
+[2,3,2,2,2,2,4,1,2,2,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,3,2,4,1,3,1,1,1,1,1,2],
+[2,5,2,3,4,2,5,2,5,2,3,1,1,1,1,1,1],
+[2,5,3,4,2,3,5,1,2,1,3,1,1,1,1,1,1],
+[2,3,3,2,3,2,5,1,2,3,3,1,1,1,1,1,1],
+[2,2,4,2,2,3,3,1,2,3,3,1,1,1,1,1,1],
+[2,2,2,4,2,2,4,1,2,2,3,1,1,1,1,1,1],
+[2,2,4,4,2,3,5,1,2,1,3,1,1,1,1,1,1],
+[2,3,3,3,4,3,5,1,2,2,3,1,1,1,1,1,1],
+[2,2,1,1,1,3,5,1,5,3,3,1,1,1,1,1,1],
+[2,4,3,3,2,2,4,1,2,3,3,1,1,1,1,1,1],
+[2,3,1,1,1,2,5,1,5,1,3,1,1,1,1,1,1],
+[2,5,2,2,4,2,5,1,2,1,3,1,1,1,1,1,1],
+[2,5,4,3,3,3,5,1,1,3,3,1,1,1,1,1,1],
+[2,3,2,3,4,2,3,2,5,1,3,1,1,1,1,1,1],
+[2,3,2,4,3,2,3,1,3,2,3,1,1,1,1,1,1],
+[2,2,2,4,4,3,5,1,1,2,3,1,1,1,1,1,1],
+[2,4,2,4,2,2,5,1,4,3,3,1,1,1,1,1,1],
+[2,1,2,1,4,4,2,3,3,2,3,1,1,1,1,1,1],
+[2,1,2,3,3,4,3,3,4,1,3,1,1,1,1,1,1],
+[2,3,2,2,2,4,2,3,4,1,3,1,1,1,1,1,1],
+[2,3,2,3,4,4,3,3,3,3,3,1,1,1,1,1,1],
+[2,1,3,2,2,4,4,3,4,3,3,1,1,1,1,1,1],
+[2,2,1,1,1,4,2,3,4,3,3,1,1,1,1,1,1],
+[2,3,1,3,1,4,2,3,5,2,3,1,1,1,1,1,1],
+[2,3,3,1,2,4,3,3,4,1,3,1,1,1,1,1,1],
+[2,2,4,2,2,4,2,3,5,1,3,1,1,1,1,1,1],
+[2,2,4,1,4,4,3,3,5,1,3,1,1,1,1,1,1],
+[2,2,3,1,4,4,3,3,3,1,3,1,1,1,1,1,1],
+[2,1,1,1,1,4,4,3,5,3,3,1,1,1,1,1,1],
+[2,2,3,1,2,4,3,3,4,1,3,1,1,1,1,1,1],
+[2,1,4,1,4,4,2,3,3,2,3,1,1,1,1,1,1],
+[2,2,4,3,4,4,4,3,5,1,3,1,1,1,1,1,1],
+[2,2,1,3,1,4,3,3,3,1,3,1,1,1,1,1,1],
+[2,2,1,2,1,4,2,3,3,3,3,1,1,1,1,1,1],
+[2,2,3,3,4,4,3,3,3,1,3,1,1,1,1,1,1],
+[2,1,4,3,3,4,2,3,4,1,3,1,1,1,1,1,1],
+[2,1,4,1,3,4,3,3,5,1,3,1,1,1,1,1,1],
+[2,1,2,2,2,4,2,3,3,3,3,1,1,1,1,1,1],
+[2,2,2,2,2,4,4,3,5,1,3,1,1,1,1,1,1],
+[2,3,2,1,2,4,4,3,4,2,3,1,1,1,1,1,1],
+[2,2,2,3,3,4,2,3,4,3,3,1,1,1,1,1,1],
+[2,3,2,2,2,4,4,3,3,3,3,1,1,1,1,1,1],
+[2,1,2,3,2,4,2,3,5,3,3,1,1,1,1,1,1],
+[2,1,4,1,4,4,4,3,3,2,3,1,1,1,1,1,1],
+[2,2,3,3,2,4,3,3,3,1,3,1,1,1,1,1,1],
+[2,1,2,1,2,4,3,3,4,2,3,1,1,1,1,1,1],
+[2,2,3,1,2,4,3,3,5,3,3,1,1,1,1,1,1],
+[3,2,2,3,2,3,4,1,1,1,3,3,3,3,2,2,1],
+[3,3,4,2,4,2,5,1,1,1,3,3,4,4,3,2,1],
+[3,1,1,1,1,3,3,1,2,1,3,3,4,3,3,2,1],
+[3,3,3,3,3,3,4,1,1,2,3,3,3,3,3,3,1],
+[3,1,4,3,2,3,5,1,1,1,3,3,3,3,3,3,1],
+[3,2,1,3,1,3,5,1,2,1,3,3,4,5,3,3,1],
+[3,2,2,4,4,3,3,2,5,3,3,3,4,3,2,3,1],
+[3,1,2,1,3,3,3,1,2,1,3,3,3,5,3,2,1],
+[3,1,3,2,3,3,3,1,1,2,3,3,4,3,3,3,1],
+[3,1,1,1,1,3,3,1,2,1,3,3,3,5,2,2,1],
+[3,3,3,3,3,3,4,1,1,1,3,3,3,5,3,2,1],
+[3,2,3,1,2,3,3,1,2,2,3,3,4,3,3,2,1],
+[3,1,4,1,4,3,4,1,2,1,3,3,4,4,2,3,1],
+[3,1,3,2,3,3,3,1,1,1,3,3,3,5,3,2,1],
+[3,3,4,4,3,3,5,1,1,1,3,3,3,3,2,3,1],
+[3,2,1,2,1,3,2,1,2,2,3,3,3,5,2,3,1],
+[3,1,3,4,3,3,3,1,2,2,3,3,3,5,2,2,1],
+[3,3,4,4,2,3,5,1,1,2,3,3,3,5,3,3,1],
+[3,1,1,2,1,2,5,1,1,1,3,3,4,4,3,3,1],
+[3,2,4,1,4,3,5,1,1,2,3,3,4,5,2,3,1],
+[3,3,1,1,1,3,3,1,2,2,3,3,4,4,3,3,1],
+[3,1,4,3,3,3,3,1,1,1,3,3,4,3,2,3,1],
+[3,3,3,1,4,3,2,1,1,2,3,3,4,5,3,3,1],
+[3,1,2,2,4,3,5,1,1,1,3,3,4,5,3,3,1],
+[3,2,1,4,1,3,2,1,1,1,3,3,4,3,3,3,1],
+[3,1,2,1,2,3,2,1,2,1,3,3,3,4,3,3,1],
+[3,2,3,4,3,3,5,2,5,2,3,3,3,5,3,2,1],
+[3,1,4,1,2,3,4,2,4,2,3,3,4,4,2,3,1],
+[3,1,2,4,4,3,5,1,1,2,3,3,3,5,2,2,1],[3,2,3,1,2,3,4,1,2,1,3,3,4,4,3,3,1]];*/
+let relo = [[2,1,3,3,3,1,1,1,2,1,1,1,1,1,1,1,1],
+[2,1,1,1,1,1,1,1,2,3,2,1,1,1,1,1,1],
+[2,1,4,4,4,1,1,2,4,1,1,1,1,1,1,1,2],
+[2,1,2,2,4,3,2,1,1,3,2,1,1,1,1,1,1],
+[2,1,1,1,1,3,2,1,2,1,1,1,1,1,1,1,1],
+[2,1,2,2,2,3,3,2,3,3,2,1,1,1,1,1,1],
+[2,1,4,3,2,3,3,1,1,2,3,1,1,1,1,1,2],
+[2,1,1,1,1,3,3,2,4,1,3,1,1,1,1,1,1],
+[2,1,4,2,4,3,3,1,2,3,3,1,1,1,1,1,1],
+[2,2,4,2,4,3,3,1,2,1,3,1,1,1,1,1,1],
+[2,3,1,1,1,3,3,2,5,1,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,3,1,2,2,3,1,1,1,1,1,1],
+[2,5,2,3,3,3,2,1,1,3,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,3,1,2,3,3,1,1,1,1,1,2],
+[2,2,2,3,4,3,3,1,1,3,3,1,1,1,1,1,1],
+]; 
+
+
+//let indica = 3;
+//let jilo = pi(relo,indica);
+//document.write(jilo[0]+"<br/>");
+//document.write(jilo[1]+"<br/>");
+/*
+for(let i=0; i <jilo.length; i++){
+document.write("<div style='color:blue; background-color:red; font-size:20;'>INDICATOR GROUP"+(i+1)+"</div><br/>");
+for(let j of jilo[i]){
+document.write('<div style="color:red;"> as part of</div> '+'Attribute : '+j+':  P'+(doMagic(relo).indexOf(j.toString())+1)+"<br/>")
+}
+}
+
+*/
+
+function ri(a,b){
+let t = count(intersect(a,b));
+let e = count(union(a,b));
+
+return t/e;
+}
+
+
+
+
+
+
+/*
+function heuristic(theSet,noOfgroup){
+let setno = theSet;
+let Indicatorno =noOfgroup;
+let dodo = pi(setno,Indicatorno);
+//document.write(dodo.length);
+let noth = [];
+let noth2 = [];
+let noth3 =[]; 
+let eemptt = [];
+for(let p = 0; p <dodo.length; p++){
+for(let i of dodo[p]){
+eemptt.push(i)
+}
+if(dodo[p].length !==1){
+for(let m of dodo[p]){
+for(let d of eemptt){
+if(dodo[p].indexOf(m) !== eemptt.indexOf(d)){
+noth.push(ri(m,d));
+place(eempt,d);
+}
+}
+}
+noth2.push(addingArray(noth)/noth.length);
+noth = [];
+}
+else{
+noth2.push(0);
+}
+eemptt=[];
+}
+document.write(noth2 +'this is groupobjective'+"<br/>");
+
+for(let c of noth2){
+if(!Number.isNaN(c)){
+noth3.push(c);
+}
+}
+let resultCalc = addingArray(noth3)/noth2.length;
+return resultCalc;
+}
+
+
+
+/*let theSet = [[2,1,3,3,3,1,1,1,2,1,1,1,1,1,1,1,1],
+[2,1,1,1,1,1,1,1,2,3,2,1,1,1,1,1,1],
+[2,1,4,4,4,1,1,2,4,1,1,1,1,1,1,1,2],
+[2,1,2,2,4,3,2,1,1,3,2,1,1,1,1,1,1],
+[2,1,1,1,1,3,2,1,2,1,1,1,1,1,1,1,1],
+[2,1,2,2,2,3,3,2,3,3,2,1,1,1,1,1,1],
+[2,1,4,3,2,3,3,1,1,2,3,1,1,1,1,1,2],
+[2,1,1,1,1,3,3,2,4,1,3,1,1,1,1,1,1],
+[2,1,4,2,4,3,3,1,2,3,3,1,1,1,1,1,1],
+[2,2,4,2,4,3,3,1,2,1,3,1,1,1,1,1,1],
+[2,3,1,1,1,3,3,2,5,1,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,3,1,2,2,3,1,1,1,1,1,1],
+[2,5,2,3,3,3,2,1,1,3,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,3,1,2,3,3,1,1,1,1,1,2],
+[2,2,2,3,4,3,3,1,1,3,3,1,1,1,1,1,1],
+[2,4,3,2,2,3,3,1,2,1,3,1,1,1,1,1,1],
+[2,4,3,4,2,3,3,1,1,2,3,1,1,1,1,1,1],
+[2,3,4,2,2,3,3,1,1,2,3,1,1,1,1,1,1],
+[2,5,2,4,2,3,3,1,2,1,3,1,1,1,1,1,1],
+[2,3,4,2,4,3,2,1,1,3,3,1,1,1,1,1,1],
+[2,5,3,2,3,3,3,1,1,1,3,1,1,1,1,1,1],
+[2,4,1,1,1,3,2,1,2,1,3,1,1,1,1,1,1],
+[2,4,3,3,3,3,2,1,2,2,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,2,2,4,2,3,1,1,1,1,1,1],
+[2,5,2,4,3,3,3,1,1,3,3,1,1,1,1,1,1],
+[2,4,4,4,3,3,2,1,2,3,3,1,1,1,1,1,1],
+[2,4,2,4,4,3,2,2,4,2,3,1,1,1,1,1,1],
+[2,4,2,4,4,3,3,2,3,3,3,1,1,1,1,1,1],
+[2,3,2,3,2,3,3,1,2,2,3,1,1,1,1,1,1],
+[2,3,2,2,3,3,2,1,1,3,3,1,1,1,1,1,1],
+[2,5,3,2,3,2,5,1,2,3,3,1,1,1,1,1,1],
+[2,3,1,1,1,2,5,1,5,2,3,1,1,1,1,1,1],
+[2,2,4,2,3,3,5,1,5,3,3,1,1,1,1,1,2],
+[2,3,2,4,3,2,5,1,3,1,1,1,1,1,1,1,1],
+[2,2,1,1,1,2,5,1,2,3,1,1,1,1,1,1,1],
+[2,5,2,2,2,2,3,1,3,3,2,1,1,1,1,1,1],
+[2,4,4,4,3,3,4,1,1,1,3,1,1,1,1,1,2],
+[2,5,1,1,1,2,4,1,4,2,3,1,1,1,1,1,1],
+[2,3,4,3,2,2,5,1,3,3,3,1,1,1,1,1,1],
+[2,2,4,3,2,2,5,2,4,3,3,1,1,1,1,1,1],
+[2,4,1,1,1,2,5,2,3,2,3,1,1,1,1,1,1],
+[2,2,1,1,1,3,5,1,2,2,3,1,1,1,1,1,1],
+[2,3,2,2,2,2,4,1,2,2,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,3,2,4,1,3,1,1,1,1,1,2],
+[2,5,2,3,4,2,5,2,5,2,3,1,1,1,1,1,1],
+[2,5,3,4,2,3,5,1,2,1,3,1,1,1,1,1,1],
+[2,3,3,2,3,2,5,1,2,3,3,1,1,1,1,1,1],
+[2,2,4,2,2,3,3,1,2,3,3,1,1,1,1,1,1],
+[2,2,2,4,2,2,4,1,2,2,3,1,1,1,1,1,1],
+[2,2,4,4,2,3,5,1,2,1,3,1,1,1,1,1,1],
+[2,3,3,3,4,3,5,1,2,2,3,1,1,1,1,1,1],
+[2,2,1,1,1,3,5,1,5,3,3,1,1,1,1,1,1],
+[2,4,3,3,2,2,4,1,2,3,3,1,1,1,1,1,1],
+[2,3,1,1,1,2,5,1,5,1,3,1,1,1,1,1,1],
+[2,5,2,2,4,2,5,1,2,1,3,1,1,1,1,1,1],
+[2,5,4,3,3,3,5,1,1,3,3,1,1,1,1,1,1],
+[2,3,2,3,4,2,3,2,5,1,3,1,1,1,1,1,1],
+[2,3,2,4,3,2,3,1,3,2,3,1,1,1,1,1,1],
+[2,2,2,4,4,3,5,1,1,2,3,1,1,1,1,1,1],
+[2,4,2,4,2,2,5,1,4,3,3,1,1,1,1,1,1],
+[2,1,2,1,4,4,2,3,3,2,3,1,1,1,1,1,1],
+[2,1,2,3,3,4,3,3,4,1,3,1,1,1,1,1,1],
+[2,3,2,2,2,4,2,3,4,1,3,1,1,1,1,1,1],
+[2,3,2,3,4,4,3,3,3,3,3,1,1,1,1,1,1],
+[2,1,3,2,2,4,4,3,4,3,3,1,1,1,1,1,1],
+[2,2,1,1,1,4,2,3,4,3,3,1,1,1,1,1,1],
+[2,3,1,3,1,4,2,3,5,2,3,1,1,1,1,1,1],
+[2,3,3,1,2,4,3,3,4,1,3,1,1,1,1,1,1],
+[2,2,4,2,2,4,2,3,5,1,3,1,1,1,1,1,1],
+[2,2,4,1,4,4,3,3,5,1,3,1,1,1,1,1,1],
+[2,2,3,1,4,4,3,3,3,1,3,1,1,1,1,1,1],
+[2,1,1,1,1,4,4,3,5,3,3,1,1,1,1,1,1],
+[2,2,3,1,2,4,3,3,4,1,3,1,1,1,1,1,1],
+[2,1,4,1,4,4,2,3,3,2,3,1,1,1,1,1,1],
+[2,2,4,3,4,4,4,3,5,1,3,1,1,1,1,1,1],
+[2,2,1,3,1,4,3,3,3,1,3,1,1,1,1,1,1],
+[2,2,1,2,1,4,2,3,3,3,3,1,1,1,1,1,1],
+[2,2,3,3,4,4,3,3,3,1,3,1,1,1,1,1,1],
+[2,1,4,3,3,4,2,3,4,1,3,1,1,1,1,1,1],
+[2,1,4,1,3,4,3,3,5,1,3,1,1,1,1,1,1],
+[2,1,2,2,2,4,2,3,3,3,3,1,1,1,1,1,1],
+[2,2,2,2,2,4,4,3,5,1,3,1,1,1,1,1,1],
+[2,3,2,1,2,4,4,3,4,2,3,1,1,1,1,1,1],
+[2,2,2,3,3,4,2,3,4,3,3,1,1,1,1,1,1],
+[2,3,2,2,2,4,4,3,3,3,3,1,1,1,1,1,1],
+[2,1,2,3,2,4,2,3,5,3,3,1,1,1,1,1,1],
+[2,1,4,1,4,4,4,3,3,2,3,1,1,1,1,1,1],
+[2,2,3,3,2,4,3,3,3,1,3,1,1,1,1,1,1],
+[2,1,2,1,2,4,3,3,4,2,3,1,1,1,1,1,1],
+[2,2,3,1,2,4,3,3,5,3,3,1,1,1,1,1,1],
+[3,2,2,3,2,3,4,1,1,1,3,3,3,3,2,2,1],
+[3,3,4,2,4,2,5,1,1,1,3,3,4,4,3,2,1],
+[3,1,1,1,1,3,3,1,2,1,3,3,4,3,3,2,1],
+[3,3,3,3,3,3,4,1,1,2,3,3,3,3,3,3,1],
+[3,1,4,3,2,3,5,1,1,1,3,3,3,3,3,3,1],
+[3,2,1,3,1,3,5,1,2,1,3,3,4,5,3,3,1],
+[3,2,2,4,4,3,3,2,5,3,3,3,4,3,2,3,1],
+[3,1,2,1,3,3,3,1,2,1,3,3,3,5,3,2,1],
+[3,1,3,2,3,3,3,1,1,2,3,3,4,3,3,3,1],
+[3,1,1,1,1,3,3,1,2,1,3,3,3,5,2,2,1],
+[3,3,3,3,3,3,4,1,1,1,3,3,3,5,3,2,1],
+[3,2,3,1,2,3,3,1,2,2,3,3,4,3,3,2,1],
+[3,1,4,1,4,3,4,1,2,1,3,3,4,4,2,3,1],
+[3,1,3,2,3,3,3,1,1,1,3,3,3,5,3,2,1],
+[3,3,4,4,3,3,5,1,1,1,3,3,3,3,2,3,1],
+[3,2,1,2,1,3,2,1,2,2,3,3,3,5,2,3,1],
+[3,1,3,4,3,3,3,1,2,2,3,3,3,5,2,2,1],
+[3,3,4,4,2,3,5,1,1,2,3,3,3,5,3,3,1],
+[3,1,1,2,1,2,5,1,1,1,3,3,4,4,3,3,1],
+[3,2,4,1,4,3,5,1,1,2,3,3,4,5,2,3,1],
+[3,3,1,1,1,3,3,1,2,2,3,3,4,4,3,3,1],
+[3,1,4,3,3,3,3,1,1,1,3,3,4,3,2,3,1],
+[3,3,3,1,4,3,2,1,1,2,3,3,4,5,3,3,1],
+[3,1,2,2,4,3,5,1,1,1,3,3,4,5,3,3,1],
+[3,2,1,4,1,3,2,1,1,1,3,3,4,3,3,3,1],
+[3,1,2,1,2,3,2,1,2,1,3,3,3,4,3,3,1],
+[3,2,3,4,3,3,5,2,5,2,3,3,3,5,3,2,1],
+[3,1,4,1,2,3,4,2,4,2,3,3,4,4,2,3,1],
+[3,1,2,4,4,3,5,1,1,2,3,3,3,5,2,2,1],[3,2,3,1,2,3,4,1,2,1,3,3,4,4,3,3,1]]; */
+
+/*let theSet =[[2,1,3,3,3,1,1,1,2,1,1,1,1,1,1,1,1],
+[2,1,1,1,1,1,1,1,2,3,2,1,1,1,1,1,1],
+[2,1,4,4,4,1,1,2,4,1,1,1,1,1,1,1,2],
+[2,1,2,2,4,3,2,1,1,3,2,1,1,1,1,1,1],
+[2,1,1,1,1,3,2,1,2,1,1,1,1,1,1,1,1],
+[2,1,2,2,2,3,3,2,3,3,2,1,1,1,1,1,1],
+[2,1,4,3,2,3,3,1,1,2,3,1,1,1,1,1,2],
+[2,1,1,1,1,3,3,2,4,1,3,1,1,1,1,1,1],
+[2,1,4,2,4,3,3,1,2,3,3,1,1,1,1,1,1],
+[2,2,4,2,4,3,3,1,2,1,3,1,1,1,1,1,1],
+[2,3,1,1,1,3,3,2,5,1,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,3,1,2,2,3,1,1,1,1,1,1],
+[2,5,2,3,3,3,2,1,1,3,3,1,1,1,1,1,1],
+[2,5,1,1,1,3,3,1,2,3,3,1,1,1,1,1,2],
+[2,2,2,3,4,3,3,1,1,3,3,1,1,1,1,1,1],
+]; 
+*/
+/*
+let noOfgroup = 3;
+document.write('<div style="background-color:red;">Objective function:</div>  '+ heuristic(theSet,noOfgroup)); 
+*/
+/*function heuristic(aset,aNumber){
+let valueSet = aset;
+let valueNumber = aNumber; 
+let gR = pi(aset,aNumber);
+let emp = [];
+let emp1 = []
+let emp2 = []
+
+for(let p=0; p < gR.length; p++){
+for(let i of gR[p]){
+for(let j of gR[p]){
+if(doMagic([i])[0] !== doMagic([j])[0] ){
+emp.push(ri(i,j));
+}
+}
+}
+emp1.push(addingArray(emp)/emp.length);
+emp = [];
+}
+
+let resultCo = addingArray(emp1)/emp1.length;
+return resultCo;
+}
+let aset = [[1,2,3],[2,3,5],[4,6,7],[7,8,9],[9,0,1]];
+let aNumber =4;
+document.write(heuristic(aset,aNumber)+"this;*/
+/*
+
+
+*/
+function doMagic(d){
+let ad = d;
+let he = [];
+for(let i of ad){
+he.push(i.toString())}
+return he;
+}
+
+
+function place(array,item){
+let index = doMagic(array).indexOf(item.toString())
+if(index !== -1){
+array[index] = -1;
+return array;
+}
+}
+
+function piir(a,groups){
+let array = a; 
+let scopes =groups;
+let empty= [];
+for(let i of scopes){
+empty.push((doMagic(array).indexOf(i.toString())+1));
+place(array,i);
+}
+return empty;
+}
+
+$("#input").on("change", function (e) {
+   var file = e.target.files[0];
+    //input canceled, return
+    if (!file) return;
+   
+   var FR = new FileReader();
+   FR.onload = function(e) {
+     var data = new Uint8Array(e.target.result);
+     var workbook = XLSX.read(data, {type: 'array'});
+     var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+     
+     // header: 1 instructs xlsx to create an 'array of arrays'
+     var result = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+     let somolo = Array.from(result);
+	 //for(let i of somolo){
+	// document.write(i+"<br/>")}
+	 let s = document.getElementById('f').value;
+	 let solu = Number(s);
+	 let maco = pi(somolo,solu);
+	 ///for(let i of maco){
+	 //document.write(i+"<br/>")};
+	 
+
+
+for(let i=0; i <maco.length; i++){
+document.write("<div style='color:blue; background-color:red; font-size:20;'>INDICATOR GROUP"+(i+1)+"</div><br/>");
+for(let h of piir(somolo,maco[i])){
+document.write("style"+h+"<br/>");
+};
+}
+
+document.write('<div style="background-color:red;">Objective function:</div>'+ heuristic(somolo,solu));
+
+	 /*
+	 for(let i=0; i <maco.length; i++){
+document.write("<div style='color:blue; background-color:red; font-size:20;'>INDICATOR GROUP"+(i+1)+"</div><br/>");
+document.write('Attribut:'+"<br/>")
+document.write('ATRIBUTE...............................................STYLES TYPE :'+"<br/><br/>")
+for(let j of maco[i]){
+document.write(j+':  STYLE '+(doMagic(somolo).indexOf(j.toString())+1)+"<br/>")
+}
+}*/
+//us(somolo);
+	 //document.write(somolo[0]);
+      //data preview
+   // var output = document.getElementById('result');
+    // output.innerHTML = JSON.stringify(result, null, 1);*/
+   };
+   FR.readAsArrayBuffer(file);
+});
+
+</script>
+</body>
+</html>

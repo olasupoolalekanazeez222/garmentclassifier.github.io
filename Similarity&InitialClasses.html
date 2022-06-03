@@ -1,0 +1,206 @@
+<html>
+<head>
+<title> heuristic software </title>
+</head>
+
+<script>
+function doMagic(d){
+let ad = d;
+let he = [];
+for(let i of ad){
+he.push(i.toString())}
+return he;
+}
+
+//function that compute intersection of two array [1,2,3] and [2,3,4] gives [2,3]
+function intersect(a,b){
+let o = a;
+let g = b;
+let empty = [];
+for(let i of o){
+for(let j of g){
+if(i.toString() == j.toString() && !empty.includes(i)){
+empty.push(i);
+}
+}
+}
+return empty
+}
+
+//use of computing union of two arrays eg [1,2,3] and [1,2,3] gives [1,2,3]
+function union(a,b){
+let something = [];
+for(let i of a){
+if(!doMagic(something).includes(doMagic([i])[0])){
+something.push(i)}
+}
+for (let j of b){
+if(!doMagic(something).includes(doMagic([j])[0])){
+something.push(j);
+}
+}
+return something;
+}
+
+// function that change  a single array to an array of array  example [1,2,3] change to  [[1,2,3]]
+function change(a){
+let d  = a;
+let something = [];
+for(let i of d){
+something.push([i]);
+}
+return something;
+}
+
+
+
+
+//function for counting each element in an array
+
+function count(l){
+return l.length;
+}
+
+//function that compute individual similarity index 
+function ri(a,b){
+let t = count(intersect(a,b));
+let e = count(union(a,b));
+
+return t/e;
+}
+
+function count(l){
+return l.length;
+}
+
+//function that compute individual similarity index 
+function ri(a,b){
+let t = count(intersect(a,b));
+let e = count(union(a,b));
+
+return t/e;
+}
+
+function doMagic(d){
+let ad = d;
+let he = [];
+for(let i of ad){
+he.push(i.toString())}
+return he;
+}
+
+
+function place(array,item){
+let index = doMagic(array).indexOf(item.toString())
+if(index !== -1){
+array[index] = -1;
+return array;
+}
+}
+
+function add(array){
+let count = 0;
+for(let i of array){
+count = count+i;
+}
+return count;
+}
+
+
+
+function projectRecommender(set){
+let f =  set; 
+let cont =[];
+let cont1 =[];
+let cont2= [];
+let cont3 =[];
+let cont4= [];
+let ep= [];
+let ep1= [];
+let empty7=[];
+
+for(let a of f){
+cont.push(a);
+}
+//document.write(cont+" cont<br/>")
+for(let i of f ){
+for(let j of f){
+ ep.push(ri(i,j));
+ }
+ //document.write(ep+" ep<br/>");
+ ep.splice(doMagic(cont).indexOf(i.toString()),1)
+ place(cont,i);
+ //document.write(ep+" epR<br/>");
+ //document.write(cont+" contR<br/>")
+ for(let l of ep){
+ cont2.push(l);
+ }
+ //document.write(cont2+"<br/>");
+ ep = [];
+ }
+document.write(cont2+"<br/>");
+for(let i=0; i < cont2.length; i++){
+document.write(i+"=="+((i%17)+1)+"="+cont2[i]+"<br/>")
+} 
+ 
+ //tracking 
+for(let b of f){
+cont3.push(b);
+}
+//document.write(cont3+"<br/>");
+for(let i of f ){
+for(let j of f){
+ ep1.push([ri(i,j),i,j]);
+ }
+ //document.write(ep1+" ep<br/>");
+ ep1.splice(doMagic(cont3).indexOf(i.toString()),1)
+ place(cont3,i);
+ //document.write(ep1+" epR<br/>");
+ //document.write(cont3+"contR<br/>")
+ for(let l of ep1){
+ cont4.push(l);
+ }
+ //document.write(cont4+"<br/>");
+ ep1 = [];
+ }
+let minimum = Math.min(...cont2);
+for(let i of cont4){
+if(i[0] == minimum){
+empty7.push(i);
+}
+}
+for(let i=0; i<empty7.length; i++){
+document.write(i+1+'='+empty7[i]+"<br/>");
+}
+let h = empty7[0];
+h.shift();
+let arrayResult = change(h); 
+return arrayResult;
+}
+let set = [[4,1,2,3,3,2,2,3,3,1,2,3,2,3,3,4],
+[2,1,2,3,2,1,2,3,3,1,1,1,1,1,1,1],
+[1,1,2,3,1,2,2,1,3,1,1,1,1,1,1,1],
+[4,1,2,3,2,1,2,3,4,1,1,1,1,1,1,1],
+[1,1,2,3,1,2,2,1,3,1,1,1,1,1,1,1],
+[2,1,2,3,2,1,2,3,3,1,1,1,1,1,1,1],
+[1,1,2,3,1,2,2,1,3,1,1,1,1,1,1,1],
+[2,1,1,3,3,2,2,3,2,1,1,1,1,1,1,1],
+[1,1,2,3,1,2,2,1,3,1,1,1,1,1,1,1],
+[1,1,2,3,1,2,2,1,3,1,1,1,1,1,1,1],
+[4,1,3,3,2,2,1,3,3,1,2,3,2,3,3,4],
+[4,1,2,3,3,2,2,3,3,1,2,3,2,3,3,4],
+[4,1,2,3,3,2,2,3,3,1,2,3,2,3,3,4],
+[4,1,2,3,3,2,2,3,3,1,2,3,2,3,3,4],
+[4,1,3,3,3,2,1,3,3,1,2,3,2,3,3,4],
+[4,1,2,3,3,2,2,3,3,1,2,3,2,3,3,4],
+[4,1,2,3,2,2,3,3,3,1,2,3,2,3,3,4],
+[4,1,2,3,3,2,2,3,3,1,2,3,2,3,2,4]];
+let google = projectRecommender(set);
+document.write(google[0]+"<br/>");
+document.write(google[1]+'<br/>'); 
+
+
+</script>
+</body>
+
+</html>

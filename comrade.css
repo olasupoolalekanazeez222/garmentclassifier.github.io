@@ -1,0 +1,13 @@
+body{background-color:white; color:white; }
+header{background-color:#000000; color:white; text-align:center; }
+#hol{width:80%; height:600px; background-color:#C0C0C0; margin-left:100px; border-radius:10px; margin-top:20px;}
+h3{font-size:20px;color:red; text-align:left; text-decoration:underline; margin-left:20px;}
+input{width:50%; height:30px; border-radius:5px; padding:10px;}
+label{font-weight:bold;}
+	p{margin:10px;  text-align:left; color:black; font-weight:bold;font-size:15px;}
+button{background-color:red; margin-top:100px;}
+	a{text-decoration:none; font-size:15px; font-weight:bold; color:white;}
+
+#man{background-color:yellow; }
+img{width:300px; height:100px;}
+#m{height:190px; width:410px;}
